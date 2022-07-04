@@ -37,8 +37,8 @@ class Window {
 
 	public var width(get, never) : Int;
 	public var height(get, never) : Int;
-	public var mouseX(get, never) : Int;
-	public var mouseY(get, never) : Int;
+	public var mouseX(get, never) : Float;
+	public var mouseY(get, never) : Float;
 	public var mouseLock(get, set) : Bool;
 	public var monitor : Null<Int> = null;
 	public var framerate : Null<Int> = null;
@@ -58,8 +58,8 @@ class Window {
 	#end
 	var windowWidth = 800;
 	var windowHeight = 600;
-	var curMouseX = 0;
-	var curMouseY = 0;
+	var curMouseX = 0.;
+	var curMouseY = 0.;
 	var savedSize : { x : Int, y : Int, width : Int, height : Int };
 
 	static var CODEMAP = [for( i in 0...2048 ) i];
@@ -79,6 +79,9 @@ class Window {
 		resizeEvents = new List();
 		#if hlsdl
 		var sdlFlags = if (!fixed) sdl.Window.SDL_WINDOW_SHOWN | sdl.Window.SDL_WINDOW_RESIZABLE else sdl.Window.SDL_WINDOW_SHOWN;
+		#if highdpi
+		sdlFlags |= sdl.Window.SDL_WINDOW_ALLOW_HIGHDPI;
+		#end
 		#if heaps_vulkan
 		if( USE_VULKAN ) sdlFlags |= sdl.Window.SDL_WINDOW_VULKAN;
 		#end
@@ -88,6 +91,14 @@ class Window {
 		#elseif hldx
 		final dxFlags = if (!fixed) dx.Window.RESIZABLE else 0;
 		window = new dx.Window(title, width, height, dx.Window.CW_USEDEFAULT, dx.Window.CW_USEDEFAULT, dxFlags);
+		#end
+	}
+
+	function getPixelRatio():Float {
+		#if (hlsdl && zyheaps)
+		return #if (ios && highdpi) zygame.utils.hl.IOSTools.get_pixel_ratio() #else 1 #end;
+		#else
+		return 1;
 		#end
 	}
 
@@ -156,20 +167,20 @@ class Window {
 		#end
 	}
 
-	function get_mouseX() : Int {
-		return curMouseX;
+	function get_mouseX() : Float {
+		return curMouseX * getPixelRatio();
 	}
 
-	function get_mouseY() : Int {
-		return curMouseY;
+	function get_mouseY() : Float {
+		return curMouseY * getPixelRatio();
 	}
 
 	function get_width() : Int {
-		return windowWidth;
+		return Std.int(windowWidth * getPixelRatio());
 	}
 
 	function get_height() : Int {
-		return windowHeight;
+		return Std.int(windowHeight * getPixelRatio());
 	}
 
 	function get_mouseLock() : Bool {
@@ -238,9 +249,9 @@ class Window {
 			default:
 			}
 		case MouseDown if (!hxd.System.getValue(IsTouch)):
-			curMouseX = e.mouseX;
-			curMouseY = e.mouseY;
-			eh = new Event(EPush, e.mouseX, e.mouseY);
+			curMouseX = e.mouseX * getPixelRatio();
+			curMouseY = e.mouseY * getPixelRatio();
+			eh = new Event(EPush, e.mouseX * getPixelRatio(), e.mouseY * getPixelRatio());
 			// middle button -> 2 / right button -> 1
 			eh.button = switch( e.button - 1 ) {
 			case 0: 0;
@@ -249,9 +260,9 @@ class Window {
 			case x: x;
 			}
 		case MouseUp if (!hxd.System.getValue(IsTouch)):
-			curMouseX = e.mouseX;
-			curMouseY = e.mouseY;
-			eh = new Event(ERelease, e.mouseX, e.mouseY);
+			curMouseX = e.mouseX * getPixelRatio();
+			curMouseY = e.mouseY * getPixelRatio();
+			eh = new Event(ERelease, e.mouseX * getPixelRatio(), e.mouseY * getPixelRatio());
 			eh.button = switch( e.button - 1 ) {
 			case 0: 0;
 			case 1: 2;
@@ -259,11 +270,11 @@ class Window {
 			case x: x;
 			};
 		case MouseMove if (!hxd.System.getValue(IsTouch)):
-			curMouseX = e.mouseX;
-			curMouseY = e.mouseY;
-			eh = new Event(EMove, e.mouseX, e.mouseY);
+			curMouseX = e.mouseX * getPixelRatio();
+			curMouseY = e.mouseY * getPixelRatio();
+			eh = new Event(EMove, e.mouseX * getPixelRatio(), e.mouseY * getPixelRatio());
 		case MouseWheel:
-			eh = new Event(EWheel, mouseX, mouseY);
+			eh = new Event(EWheel, mouseX * getPixelRatio(), mouseY * getPixelRatio());
 			eh.wheelDelta = -e.wheelDelta;
 		#if hlsdl
 		case GControllerAdded, GControllerRemoved, GControllerUp, GControllerDown, GControllerAxis:
