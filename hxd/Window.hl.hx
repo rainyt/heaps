@@ -96,7 +96,15 @@ class Window {
 
 	function getPixelRatio():Float {
 		#if (hlsdl && zyheaps)
-		return #if (ios && highdpi) zygame.utils.hl.IOSTools.get_pixel_ratio() #else 1 #end;
+		#if highdpi
+		#if ios
+		return zygame.utils.hl.IOSTools.get_pixel_ratio();
+		#elseif mac
+		return 2
+		#end
+		#else
+		return 1; 
+		#end;
 		#else
 		return 1;
 		#end
