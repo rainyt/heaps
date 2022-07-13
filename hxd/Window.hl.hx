@@ -99,6 +99,8 @@ class Window {
 		#if highdpi
 		#if (ios || mac)
 		return zygame.utils.hl.IOSTools.get_pixel_ratio();
+		#else
+		return 1;
 		#end
 		#else
 		return 1; 
