@@ -176,11 +176,11 @@ class Window {
 	}
 
 	function get_mouseX() : Float {
-		return curMouseX * getPixelRatio();
+		return curMouseX; //* getPixelRatio();
 	}
 
 	function get_mouseY() : Float {
-		return curMouseY * getPixelRatio();
+		return curMouseY; //* getPixelRatio();
 	}
 
 	function get_width() : Int {
