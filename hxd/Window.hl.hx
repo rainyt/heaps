@@ -66,7 +66,8 @@ class Window {
 	static var MIN_HEIGHT = 720;
 	static var MIN_FRAMERATE = 60; // 30 and 60 are always allowed
 	#if hlsdl
-	static inline var TOUCH_SCALE = #if (ios || hl_ver >= version("1.12.0")) 10000 #else 100 #end;
+	// static inline var TOUCH_SCALE = #if (ios || hl_ver >= version("1.12.0")) 10000 #else 100 #end;
+	static inline var TOUCH_SCALE = #if (ios || hl_ver >= version("1.12.0")) 10000 #elseif android 10000 #else 100 #end;
 	#if heaps_vulkan
 	public static var USE_VULKAN = false;
 	#end
@@ -176,11 +177,11 @@ class Window {
 	}
 
 	function get_mouseX() : Float {
-		return curMouseX; //* getPixelRatio();
+		return curMouseX;
 	}
 
 	function get_mouseY() : Float {
-		return curMouseY; //* getPixelRatio();
+		return curMouseY;
 	}
 
 	function get_width() : Int {
