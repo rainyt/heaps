@@ -283,7 +283,7 @@ class Window {
 			curMouseY = e.mouseY * getPixelRatio();
 			eh = new Event(EMove, e.mouseX * getPixelRatio(), e.mouseY * getPixelRatio());
 		case MouseWheel:
-			eh = new Event(EWheel, mouseX * getPixelRatio(), mouseY * getPixelRatio());
+			eh = new Event(EWheel, mouseX, mouseY);
 			eh.wheelDelta = -e.wheelDelta;
 		#if hlsdl
 		case GControllerAdded, GControllerRemoved, GControllerUp, GControllerDown, GControllerAxis:
