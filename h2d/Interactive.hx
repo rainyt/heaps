@@ -162,8 +162,8 @@ class Interactive extends Object implements hxd.SceneEvents.Interactive {
 				return;
 			}
 		}
-		e.propagate = propagateEvents;
-		e.cancel = cancelEvents;
+		if( propagateEvents ) e.propagate = true;
+		if( cancelEvents ) e.cancel = true;
 		switch( e.kind ) {
 		case EMove:
 			onMove(e);
