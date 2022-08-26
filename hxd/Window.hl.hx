@@ -1,4 +1,5 @@
 package hxd;
+import sdl.Sdl;
 import hxd.Key in K;
 
 #if (hlsdl && hldx)
@@ -78,6 +79,9 @@ class Window {
 		eventTargets = new List();
 		resizeEvents = new List();
 		#if hlsdl
+		Sdl.setHint("SDL_WINDOWS_DPI_AWARENESS","permonitor");
+		Sdl.setHint("SDL_IME_SHOW_UI","1");
+		Sdl.setHint("SDL_WINDOWS_DPI_SCALING","1");
 		var sdlFlags = if (!fixed) sdl.Window.SDL_WINDOW_SHOWN | sdl.Window.SDL_WINDOW_RESIZABLE else sdl.Window.SDL_WINDOW_SHOWN;
 		#if highdpi
 		sdlFlags |= sdl.Window.SDL_WINDOW_ALLOW_HIGHDPI;
