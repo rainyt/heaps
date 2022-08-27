@@ -289,21 +289,21 @@ class System {
 	}
 	#end
 
-	#if (hl_ver < version("1.12.0"))
-	public static function getClipboardText() : String {
-		return null;
-	}
-
-	public static function setClipboardText(text:String) : Bool {
-		return false;
-	}
-	#elseif hlsdl
+	#if (hlsdl >= version("1.12.0"))
 	public static function getClipboardText() : String {
 		return sdl.Sdl.getClipboardText();
 	}
 
 	public static function setClipboardText(text:String) : Bool {
 		return sdl.Sdl.setClipboardText(text);
+	}
+	#elseif (hl_ver < version("1.12.0"))
+	public static function getClipboardText() : String {
+		return null;
+	}
+
+	public static function setClipboardText(text:String) : Bool {
+		return false;
 	}
 	#else
 	public static function getClipboardText() : String {
