@@ -262,9 +262,15 @@ class TextInput extends Text {
 				beforeChange();
 				if( selectionRange != null )
 					cutSelection();
-				#if mac
-				text = text.substr(0, cursorIndex) + e.inputChar + text.substr(cursorIndex);
-				cursorIndex += e.inputChar.length;
+				#if (hlsdl >= version("1.12.1"))
+				if(e.inputChar != ""){
+					text = text.substr(0, cursorIndex) + e.inputChar + text.substr(cursorIndex);
+					cursorIndex += e.inputChar.length;
+				}
+				else{
+					text = text.substr(0, cursorIndex) + String.fromCharCode(e.charCode) + text.substr(cursorIndex);
+					cursorIndex++;
+				}
 				#else
 				text = text.substr(0, cursorIndex) + String.fromCharCode(e.charCode) + text.substr(cursorIndex);
 				cursorIndex++;

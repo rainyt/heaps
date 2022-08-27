@@ -318,7 +318,7 @@ class Window {
 				((c & 0x1F) << 12) | (((e.keyCode >> 8) & 0x7F) << 6) | ((e.keyCode >> 16) & 0x7F);
 			else
 				((c & 0x0F) << 18) | (((e.keyCode >> 8) & 0x7F) << 12) | (((e.keyCode >> 16) & 0x7F) << 6) | ((e.keyCode >> 24) & 0x7F);
-			#if mac
+			#if (hlsdl >= version("1.12.1"))
 			eh.inputChar = e.inputChar != null ? @:privateAccess String.fromUCS2(e.inputChar) : "";
 			#end
 		case TouchDown if (hxd.System.getValue(IsTouch)):

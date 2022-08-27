@@ -37,7 +37,7 @@ class Event {
 	public var touchId : Int;
 	public var keyCode : Int;
 	public var charCode : Int;
-	#if mac
+	#if (hlsdl >= version("1.12.1"))
 	public var inputChar : String;
 	#end
 	public var wheelDelta : Float;
