@@ -152,10 +152,12 @@ class TextInput extends Text {
 	}
 
 	function isKeyCtrl():Bool{
+		#if hl
 		if(Sys.systemName() == "Mac"){
 			// Command
 			return K.isDown(K.LEFT_WINDOW_KEY);
 		}
+		#end
 		return K.isDown(K.CTRL);
 	}
 
