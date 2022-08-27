@@ -163,8 +163,6 @@ class TextInput extends Text {
 		if( e.cancel || cursorIndex < 0 )
 			return;
 
-		trace(e.keyCode);
-
 		var oldIndex = cursorIndex;
 		var oldText = text;
 
