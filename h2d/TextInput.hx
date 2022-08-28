@@ -108,6 +108,12 @@ class TextInput extends Text {
 			}
 		};
 		interactive.onKeyDown = function(e:hxd.Event) {
+			#if (hlsdl >= version("1.12.1"))
+			// When the IME is being input, the key input should not occur
+			// Mac is invalid.
+			if(sdl.Sdl.isTextInputShown())
+				return;
+			#end
 			onKeyDown(e);
 			handleKey(e);
 		};
@@ -164,6 +170,8 @@ class TextInput extends Text {
 	function handleKey( e : hxd.Event ) {
 		if( e.cancel || cursorIndex < 0 )
 			return;
+
+		trace("BACKSPACE",e.keyCode,e.inputChar);
 
 		var oldIndex = cursorIndex;
 		var oldText = text;
