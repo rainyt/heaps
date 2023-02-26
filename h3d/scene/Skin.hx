@@ -217,7 +217,7 @@ class Skin extends MultiMaterial {
 	}
 
 	override function sync( ctx : RenderContext ) {
-		if( !ctx.visibleFlag && !alwaysSync )
+		if( !ctx.visibleFlag && !alwaysSyncAnimation )
 			return;
 		syncJoints();
 	}
@@ -262,7 +262,7 @@ class Skin extends MultiMaterial {
 			if( jointsGraphics == null ) {
 				jointsGraphics = new Graphics(this);
 				jointsGraphics.material.mainPass.depth(false, Always);
-				jointsGraphics.material.mainPass.setPassName("overlay");
+				jointsGraphics.material.mainPass.setPassName("alpha");
 			}
 			var topParent : Object = this;
 			while( topParent.parent != null )

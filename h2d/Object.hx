@@ -180,7 +180,7 @@ class Object #if (domkit && !domkit_heaps) implements domkit.Model<h2d.Object> #
 	/**
 		Returns the updated absolute position matrix. See `Object.getMatrix` for current matrix values.
 	**/
-	public function getAbsPos() {
+	inline public function getAbsPos() {
 		syncPos();
 		var m = new h2d.col.Matrix();
 		m.a = matA;
@@ -294,7 +294,6 @@ class Object #if (domkit && !domkit_heaps) implements domkit.Model<h2d.Object> #
 		if( width <= 0 || height <= 0 ) return;
 
 		if( relativeTo == null  ) {
-			var x, y;
 			out.addPos(dx * matA + dy * matC + absX, dx * matB + dy * matD + absY);
 			out.addPos((dx + width) * matA + dy * matC + absX, (dx + width) * matB + dy * matD + absY);
 			out.addPos(dx * matA + (dy + height) * matC + absX, dx * matB + (dy + height) * matD + absY);
