@@ -1,6 +1,9 @@
 # Heaps
 _High Performance Game Framework_
 
+# 版本同步说明
+该Heaps已同步1.10.0版本
+
 [![Build Status](https://travis-ci.org/HeapsIO/heaps.svg?branch=master)](https://travis-ci.org/HeapsIO/heaps)
 [![](https://img.shields.io/discord/162395145352904705.svg?logo=discord)](https://discordapp.com/invite/sWCGm33)
 
